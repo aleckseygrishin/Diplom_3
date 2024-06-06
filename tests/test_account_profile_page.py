@@ -10,7 +10,8 @@ class TestPersonalAccountPage:
 
         assert switch.get_current_url(Urls.LOGIN_PAGE_URL) == Urls.LOGIN_PAGE_URL
 
-    def test_switch_to_personal_account_with_auth_user_current_url_correct(self, driver, create_and_delete_user, user_data_registration):
+    def test_switch_to_personal_account_with_auth_user_current_url_correct(self, driver, create_and_delete_user,
+                                                                           user_data_registration):
         switch = PersonalAccountPage(driver=driver, user_data_registration=user_data_registration)
         switch.login()
         switch.click_on_personal_account_button()

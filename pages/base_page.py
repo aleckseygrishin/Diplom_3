@@ -1,15 +1,15 @@
 import allure
+
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-
+from seletools.actions import drag_and_drop
 from locators.login_page_locators import LoginPageLocators
 from urls import Urls
 
 
 class BasePage:
-    def __init__(self, driver, create_and_delete_user=None, user_data_registration=None):
+    def __init__(self, driver, user_data_registration=None):
         self.driver = driver
-        self.create_and_delete_user = create_and_delete_user
         self.user_data_registration = user_data_registration
 
     def get_user_data(self):
@@ -30,6 +30,10 @@ class BasePage:
 
     def wait_and_find_element(self, locator):
         WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located(locator))
+        return self.driver.find_element(*locator)
+
+    def wait_and_find_element_invisible(self, locator):
+        WebDriverWait(self.driver, 30).until(expected_conditions.invisibility_of_element_located(locator))
         return self.driver.find_element(*locator)
 
     def wait_clickable_and_find_element(self, locator):
@@ -64,6 +68,20 @@ class BasePage:
     @allure.step('Возвращаем тип элемента найденного по локатору')
     def get_attribute_element(self, locator, attribute):
         return self.wait_and_find_element(locator).get_attribute(attribute)
+
+    @allure.step('Проверяем что элемент отображается пользователю')
+    def check_is_displayed(self, locator):
+        element = self.wait_and_find_element(locator)
+        return element.is_displayed()
+
+    def check_is_not_displayed(self, locator):
+        element = self.wait_and_find_element_invisible(locator)
+        return not element.is_displayed()
+
+    def add_ingredient_drag_and_drop(self, source_locator, target_locator):
+        source = self.wait_and_find_element(source_locator)
+        target = self.wait_and_find_element(target_locator)
+        drag_and_drop(self.driver, source, target)
 
     # Метод для авторизации на сайте, чтобы был общим разместил в BasePage
     def login(self):
