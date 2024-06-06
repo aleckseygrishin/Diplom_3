@@ -2,6 +2,9 @@ import allure
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from locators.login_page_locators import LoginPageLocators
+from urls import Urls
+
 
 class BasePage:
     def __init__(self, driver, create_and_delete_user=None, user_data_registration=None):
@@ -61,3 +64,10 @@ class BasePage:
     @allure.step('Возвращаем тип элемента найденного по локатору')
     def get_attribute_element(self, locator, attribute):
         return self.wait_and_find_element(locator).get_attribute(attribute)
+
+    # Метод для авторизации на сайте, чтобы был общим разместил в BasePage
+    def login(self):
+        self.open_page_on_url(Urls.LOGIN_PAGE_URL)
+        self.set_field_argument(LoginPageLocators.LOGIN_EMAIL_FIELD, self.get_user_email())
+        self.set_field_argument(LoginPageLocators.LOGIN_PASSWORD_FIELD, self.get_user_password())
+        self.click_on_button_wait_of_visible(LoginPageLocators.LOGIN_BUTTON_ENTER)

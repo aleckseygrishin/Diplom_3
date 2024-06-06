@@ -2,7 +2,7 @@ from pages.login_page import LoginPage
 from urls import Urls
 
 
-class TestPasswordRecovery:
+class TestLoginPagePasswordRecover:
     def test_switch_on_forgot_password_page_current_url_correct(self, driver):
         login_page = LoginPage(driver)
         login_page.open_login_page_on_url()

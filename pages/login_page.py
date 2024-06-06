@@ -24,3 +24,5 @@ class LoginPage(BasePage):
 
     def include_class_name_in_element(self):
         return self.get_attribute_element(LoginPageLocators.PASSWORD_FIELD_DIV, "class")
+
+
