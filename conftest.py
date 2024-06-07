@@ -1,10 +1,8 @@
 import allure
 import pytest
 from selenium import webdriver
-
 from create_user_api.burger_api import BurgerApi
 from create_user_api.helper_api import HelperApi
-from pages.login_page import LoginPage
 
 
 # Тесты на Firefox работают, через раз, выполнение только на Chrome

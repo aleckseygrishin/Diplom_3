@@ -1,5 +1,4 @@
 import allure
-
 from faker import Faker
 
 
@@ -19,4 +18,3 @@ class HelperApi:
     def get_access_token(response):
         access_token = response.json()["accessToken"]
         return access_token
-

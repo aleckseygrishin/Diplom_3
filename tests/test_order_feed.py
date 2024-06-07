@@ -1,3 +1,4 @@
+import allure
 from helper import Helper
 from locators.feed_page_locators import FeedPageLocators
 from locators.main_page_locators import MainPageLocators
@@ -5,6 +6,8 @@ from pages.feed_page import FeedPage
 
 
 class TestOrderFeed:
+    @allure.title('Проверка отображение заказа пользователя из истории в ленте')
+    @allure.description('Ожидаем: заказ присутствует')
     def test_order_is_visible_in_history_order_user(self, driver, create_and_delete_user, user_data_registration):
         order = FeedPage(driver, user_data_registration)
         order.login()
@@ -17,6 +20,8 @@ class TestOrderFeed:
 
         assert checking
 
+    @allure.title('Проверка прибавления счетчика за всё время, при создании заказа')
+    @allure.description('Ожидаем: счётчик прибавился')
     def test_order_count_all_time_count_plus_where_order_create(self, driver, create_and_delete_user,
                                                                 user_data_registration):
         order = FeedPage(driver, user_data_registration)
@@ -31,6 +36,8 @@ class TestOrderFeed:
 
         assert int(count_plus) - int(count) == 1
 
+    @allure.title('Проверка прибавления счетчика за сегодня, при создании заказа')
+    @allure.description('Ожидаем: счётчик прибавился')
     def test_order_count_today_count_plus_where_order_create(self, driver, create_and_delete_user,
                                                              user_data_registration):
         order = FeedPage(driver, user_data_registration)
@@ -45,6 +52,8 @@ class TestOrderFeed:
 
         assert int(count_plus) - int(count) == 1
 
+    @allure.title('Проверка отображения заказа в Ленте заказов в графе - В работе')
+    @allure.description('Ожидаем: заказ отображается')
     def test_order_in_work_id_located_in_work(self, driver, create_and_delete_user, user_data_registration):
         order = FeedPage(driver, user_data_registration)
         order.login()
@@ -59,6 +68,8 @@ class TestOrderFeed:
 
         assert order.check_is_displayed(locator)
 
+    @allure.title('Проверка отображения окна заказа')
+    @allure.description('Ожидаем: окно заказа открывается')
     def test_open_order_window_is_visible(self, driver, create_and_delete_user, user_data_registration):
         order = FeedPage(driver, user_data_registration)
         order.login()
