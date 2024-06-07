@@ -1,3 +1,4 @@
+from locators.base_page_locators import BasePageLocators
 from locators.main_page_locators import MainPageLocators
 from pages.base_page import BasePage
 
@@ -10,7 +11,7 @@ class MainPage(BasePage):
         self.click_on_button_wait_of_visible(MainPageLocators.ORDER_FEED_BUTTON)
 
     def click_on_ingredient(self):
-        self.click_on_button_wait_of_visible(MainPageLocators.BREAD_INGREDIENT_FIRST)
+        self.click_on_button_wait_of_visible(BasePageLocators.BREAD_INGREDIENT_FIRST)
 
     def click_on_close_button(self):
         self.click_on_button_wait_of_visible(MainPageLocators.CLOSE_BUTTON)
@@ -19,14 +20,10 @@ class MainPage(BasePage):
         return self.check_is_displayed(MainPageLocators.WINDOW_INGREDIENT)
 
     def check_window_ingredient_is_invisible(self):
-        return self.check_is_not_displayed(MainPageLocators.WINDOW_INGREDIENT)
+        return self.check_is_displayed(MainPageLocators.SECTION_OPENED_WINDOW)
 
     def check_window_finish_create_order(self):
         return self.check_is_displayed(MainPageLocators.WINDOW_FINISH_CREATE_ORDER)
-
-    def add_ingredient(self):
-        self.add_ingredient_drag_and_drop(source_locator=MainPageLocators.BREAD_INGREDIENT_FIRST,
-                                          target_locator=MainPageLocators.SECTION_DROP_INGREDIENT)
 
     def check_count_ingredient(self):
         return self.get_text_element(MainPageLocators.COUNT_ADD_INGREDIENT)

@@ -1,5 +1,3 @@
-import time
-
 from pages.main_page import MainPage
 from urls import Urls
 
@@ -31,13 +29,12 @@ class TestMainPage:
         switch.open_page_on_url(Urls.BASE_URL)
         switch.click_on_ingredient()
         switch.click_on_close_button()
-
         assert switch.check_window_ingredient_is_invisible()
 
     def test_add_ingredient_count_plus_number_two(self, driver):
         switch = MainPage(driver)
         switch.open_page_on_url(Urls.BASE_URL)
-        switch.add_ingredient()
+        switch.add_bread_ingredient()
 
         assert switch.check_count_ingredient() == '2'
 
@@ -45,7 +42,7 @@ class TestMainPage:
                                                                               user_data_registration):
         switch = MainPage(driver, user_data_registration)
         switch.login()
-        switch.add_ingredient()
+        switch.add_bread_ingredient()
         switch.click_on_button_create_order()
 
         assert switch.check_window_finish_create_order()

@@ -3,7 +3,7 @@ import allure
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from seletools.actions import drag_and_drop
-from locators.login_page_locators import LoginPageLocators
+from locators.base_page_locators import BasePageLocators
 from urls import Urls
 
 
@@ -16,9 +16,6 @@ class BasePage:
         if self.user_data_registration is not None:
             return self.user_data_registration
 
-    def get_user_name(self):
-        return self.get_user_data()["name"]
-
     def get_user_email(self):
         return self.get_user_data()["email"]
 
@@ -28,13 +25,13 @@ class BasePage:
     def open_page_on_url(self, url):
         self.driver.get(url)
 
-    def wait_and_find_element(self, locator):
+    def wait_and_find_element(self, locator, get_element=None):
         WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located(locator))
-        return self.driver.find_element(*locator)
+        if (get_element is None) or (get_element is True):
+            return self.driver.find_element(*locator)
 
-    def wait_and_find_element_invisible(self, locator):
-        WebDriverWait(self.driver, 30).until(expected_conditions.invisibility_of_element_located(locator))
-        return self.driver.find_element(*locator)
+    def wait_presents_element_located(self, locator):
+        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located(locator))
 
     def wait_clickable_and_find_element(self, locator):
         element = self.driver.find_element(*locator)
@@ -74,18 +71,18 @@ class BasePage:
         element = self.wait_and_find_element(locator)
         return element.is_displayed()
 
-    def check_is_not_displayed(self, locator):
-        element = self.wait_and_find_element_invisible(locator)
-        return not element.is_displayed()
-
     def add_ingredient_drag_and_drop(self, source_locator, target_locator):
         source = self.wait_and_find_element(source_locator)
         target = self.wait_and_find_element(target_locator)
         drag_and_drop(self.driver, source, target)
 
+    def add_bread_ingredient(self):
+        self.add_ingredient_drag_and_drop(source_locator=BasePageLocators.BREAD_INGREDIENT_FIRST,
+                                          target_locator=BasePageLocators.SECTION_DROP_INGREDIENT)
+
     # Метод для авторизации на сайте, чтобы был общим разместил в BasePage
     def login(self):
         self.open_page_on_url(Urls.LOGIN_PAGE_URL)
-        self.set_field_argument(LoginPageLocators.LOGIN_EMAIL_FIELD, self.get_user_email())
-        self.set_field_argument(LoginPageLocators.LOGIN_PASSWORD_FIELD, self.get_user_password())
-        self.click_on_button_wait_of_visible(LoginPageLocators.LOGIN_BUTTON_ENTER)
+        self.set_field_argument(BasePageLocators.LOGIN_EMAIL_FIELD, self.get_user_email())
+        self.set_field_argument(BasePageLocators.LOGIN_PASSWORD_FIELD, self.get_user_password())
+        self.click_on_button_wait_of_visible(BasePageLocators.LOGIN_BUTTON_ENTER)
