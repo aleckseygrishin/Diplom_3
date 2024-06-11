@@ -13,3 +13,8 @@ class MainPageLocators:
     BUTTON_CREATE_ORDER = (By.XPATH, "//button[text()='Оформить заказ']")
     SECTION_OPENED_WINDOW = (By.XPATH, "//h2[text()='Детали ингредиента']/parent::div"
                                        "/parent::div/parent::section[@class='Modal_modal__P3_V5']")
+    SOUSE_FIRST = (By.XPATH, "//p[text()='Соус Spicy-X']/parent::a")
+    SOUSE_SECOND = (By.XPATH, "//p[text()='Соус фирменный Space Sauce']/parent::a")
+    SECTION_DROP_INGREDIENT = (By.XPATH, "//ul/parent::section")
+    BREAD_INGREDIENT_FIRST = (By.XPATH, "//p[text()='Флюоресцентная булка R2-D3']/parent::a")
+    PERSONAL_ACCOUNT_BUTTON = (By.XPATH, "//a[@href='/account']")

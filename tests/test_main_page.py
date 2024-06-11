@@ -1,4 +1,5 @@
 import allure
+from pages.login_page import LoginPage
 from pages.main_page import MainPage
 from urls import Urls
 
@@ -8,7 +9,8 @@ class TestMainPage:
     @allure.description('Ожидаем: страница Конструктор отображается')
     def test_switch_to_constructor_button_current_url_correct(self, driver):
         switch = MainPage(driver)
-        switch.open_page_on_url(Urls.LOGIN_PAGE_URL)
+        switch_to_login_page = LoginPage(driver)
+        switch_to_login_page.open_login_page_on_url()
         switch.click_on_button_constructor()
 
         assert switch.get_current_url(Urls.BASE_URL) == Urls.BASE_URL
@@ -17,7 +19,8 @@ class TestMainPage:
     @allure.description('Ожидаем: страница Лента заказов отображается')
     def test_switch_to_order_feed_current_url_correct(self, driver):
         switch = MainPage(driver)
-        switch.open_page_on_url(Urls.LOGIN_PAGE_URL)
+        switch_to_login_page = LoginPage(driver)
+        switch_to_login_page.open_login_page_on_url()
         switch.click_on_order_feed_button()
 
         assert switch.get_current_url(Urls.ORDER_FEED_URL) == Urls.ORDER_FEED_URL
@@ -26,7 +29,7 @@ class TestMainPage:
     @allure.description('Ожидаем: открылось окно со свойствами ингредиента')
     def test_choose_ingredient_window_is_visible(self, driver):
         switch = MainPage(driver)
-        switch.open_page_on_url(Urls.BASE_URL)
+        switch.open_base_page_url()
         switch.click_on_ingredient()
 
         assert switch.check_ingredient_window_is_visible()
@@ -35,7 +38,7 @@ class TestMainPage:
     @allure.description('Ожидаем: окно закрылось')
     def test_close_window_ingredient_window_is_not_visible(self, driver):
         switch = MainPage(driver)
-        switch.open_page_on_url(Urls.BASE_URL)
+        switch.open_base_page_url()
         switch.click_on_ingredient()
         switch.click_on_close_button()
         assert switch.check_window_ingredient_is_invisible()
@@ -44,7 +47,7 @@ class TestMainPage:
     @allure.description('Ожидаем: счетчик ингредиента увеличился на 2')
     def test_add_ingredient_count_plus_number_two(self, driver):
         switch = MainPage(driver)
-        switch.open_page_on_url(Urls.BASE_URL)
+        switch.open_base_page_url()
         switch.add_bread_ingredient()
 
         assert switch.check_count_ingredient() == '2'

@@ -28,6 +28,10 @@ class BasePage:
     def open_page_on_url(self, url):
         self.driver.get(url)
 
+    @allure.step("Открываем Главную страницу")
+    def open_base_page_url(self):
+        self.open_page_on_url(Urls.BASE_URL)
+
     @allure.step("Возвращаем элемент после ожидания по видимости")
     def wait_and_find_element(self, locator, get_element=None):
         WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located(locator))
@@ -38,23 +42,10 @@ class BasePage:
     def wait_presents_element_located(self, locator):
         WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located(locator))
 
-    @allure.step("Возвращаем элемент после ожидания по кликабельности")
-    def wait_clickable_and_find_element(self, locator):
-        element = self.driver.find_element(*locator)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        WebDriverWait(self.driver, 30).until(expected_conditions.element_to_be_clickable(locator))
-
-        return element
-
     @allure.step("Кликаем по кнопке, после ожидания по появлению")
     def click_on_button_wait_of_visible(self, locator):
         button = self.wait_and_find_element(locator)
         button.click()
-
-    @allure.step("Кликаем по кнопке, после ожидания по кликабельности")
-    def click_on_button_clickable(self, locator):
-        button_header = self.wait_clickable_and_find_element(locator)
-        button_header.click()
 
     @allure.step("Заполняем поле переданным аргументом")
     def set_field_argument(self, locator, argument):
@@ -84,12 +75,6 @@ class BasePage:
         source = self.wait_and_find_element(source_locator)
         target = self.wait_and_find_element(target_locator)
         drag_and_drop(self.driver, source, target)
-
-    # Сделал общим, для нескольких тестов, поэтому поместил в BasePage
-    @allure.step("Перетаскиваем булочку, в поле добавления ингредиента")
-    def add_bread_ingredient(self):
-        self.add_ingredient_drag_and_drop(source_locator=BasePageLocators.BREAD_INGREDIENT_FIRST,
-                                          target_locator=BasePageLocators.SECTION_DROP_INGREDIENT)
 
     @allure.step("Авторизация на сайте")
     # Метод для авторизации на сайте, чтобы был общим разместил в BasePage

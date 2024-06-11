@@ -7,8 +7,7 @@ class FeedPageLocators:
                                    "/p[contains(@class, 'text_type_digits-default')]")
     DONE_ORDER_ALL_TIME = (By.XPATH, "//p[text()='Выполнено за все время:']/following-sibling::p")
     DONE_ORDER_TODAY = (By.XPATH, "//p[text()='Выполнено за сегодня:']/following-sibling::p")
-    SOUSE_FIRST = (By.XPATH, "//p[text()='Соус Spicy-X']/parent::a")
-    SOUSE_SECOND = (By.XPATH, "//p[text()='Соус фирменный Space Sauce']/parent::a")
+
     ORDER_ID_IN_WINDOW_ORDER = (By.XPATH, "//p[text()='идентификатор заказа']/parent::div/h2")
     TICK_SUCCESS = (By.XPATH, "//img[@alt='tick animation']")
     MODAL_WINDOW_ORDER_SUCCESS = (By.XPATH, "//div[@class='Modal_modal__P3_V5']")
